@@ -9,7 +9,7 @@ import requests
 import json
 import time as t
 
-
+#githubテストコメント
 
 # DB Managment
 import sqlite3
