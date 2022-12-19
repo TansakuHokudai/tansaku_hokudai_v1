@@ -105,7 +105,7 @@ def main():
                     st.dataframe(clean_db)
 
                 elif task == "Update DB":
-                    id = st.text_input('JDreamIDを入力', '')s
+                    id = st.text_input('JDreamIDを入力', '')
                     secretKey = st.text_input('APIキーを入力','')
                     old_uploaded_excel = st.file_uploader('古いファイルをアップロード', type='xlsx')
                     new_uploaded_excel = st.file_uploader('新しいファイルをアップロード', type='xlsx')
