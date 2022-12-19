@@ -127,6 +127,7 @@ def main():
                             #API接続
                             try:
                                 r = JDream_api_response(name, str(id), str(secretKey))
+                                st.write(r)
                                 author_id = json.loads(r.text)['data'][0]['authorId']
                                 organization = json.loads(r.text)['data'][0]['organization']
                                 if organization == '北海道大学':
@@ -138,6 +139,7 @@ def main():
                                 JDream_user_url = ''
                             
                             JDream_user_url_list.append(JDream_user_url)
+                            st.write(JDream_user_url)
 
                         new_researcher_df['リンクコピー'] = JDream_user_url_list
 
