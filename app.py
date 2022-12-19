@@ -10,6 +10,7 @@ import json
 import time as t
 
 
+#githubテストコメント
 
 # DB Managment
 import sqlite3
@@ -17,8 +18,8 @@ import sqlite3
 conn_log = sqlite3.connect('data.db')
 c = conn_log.cursor()
 
-#conn = sqlite3.connect('Jdream_url.db')
-#c_jd = conn.cursor()
+conn = sqlite3.connect('Jdream_url.db')
+c_jd = conn.cursor()
 
 def create_usertable():
     c.execute('CREATE TABLE IF NOT EXISTS userstable(username TEXT, password TEXT)')
@@ -41,10 +42,12 @@ def file_downloader(filename, file_label='File'):
     with open(filename, 'rb') as f:
         data = f.read()
 
-def JDream_api_response(name, id, secretKey):
+def JDream_api_response(name, id):
     dt_now = datetime.datetime.now()
     time = dt_now.strftime('%Y%m%d%H%M%S')
 
+    secretKey = 'HJD0scmQgboBkOp6nzu9aVEJryLYVXh3'
+    #date = '20221128162000'
 
     signature = hmac.new(key=bytes(secretKey,'utf-8'), msg=bytes(id+':'+time,'utf-8'), digestmod=hashlib.sha256).digest()
     base64_signature = base64.b64encode(signature).decode()
@@ -81,7 +84,7 @@ def main():
         #st.table(JD_data_df.columns)
 
     if choice == "Update":
-        #st.subheader("")
+        st.subheader("")
         username = st.sidebar.text_input("User Name")
         password = st.sidebar.text_input("Password", type='password')
         if st.sidebar.checkbox("Login"):
@@ -106,7 +109,6 @@ def main():
 
                 elif task == "Update DB":
                     id = st.text_input('JDreamIDを入力', '')
-                    secretKey = st.text_input('APIキーを入力','')
                     old_uploaded_excel = st.file_uploader('古いファイルをアップロード', type='xlsx')
                     new_uploaded_excel = st.file_uploader('新しいファイルをアップロード', type='xlsx')
                     submit_btn_xlsx = st.button('処理実行')
@@ -126,7 +128,7 @@ def main():
                         for name in new_researcher_df['氏名']:
                             #API接続
                             try:
-                                r = JDream_api_response(name, id, secretKey)
+                                r = JDream_api_response(name, id)
                                 author_id = json.loads(r.text)['data'][0]['authorId']
                                 organization = json.loads(r.text)['data'][0]['organization']
                                 if organization == '北海道大学':
